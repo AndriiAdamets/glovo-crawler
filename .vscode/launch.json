@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "pwa-node",
+        "request": "launch",
+        "name": "Debug Glovo Crawler",
+        "skipFiles": ["<node_internals>/**"],
+        "runtimeArgs": [
+          "-r",
+          "ts-node/register",
+          "-r",
+          "tsconfig-paths/register"
+        ],
+        "args": [
+          "src/main.ts",
+          "https://glovoapp.com/es/es/madrid/makan-madrid/"
+        ],
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "outputCapture": "std"
+      }
+    ]
+  }
+  
