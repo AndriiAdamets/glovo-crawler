@@ -1,36 +1,50 @@
-import { ElementHandle as PlaywriteElementHandle } from 'playwright';
-
-export interface Product {
+interface BaseDescription {
   name: string;
   description?: string;
+}
+export interface ModifierItem extends BaseDescription {
   price: number;
-  child_modifiers?: {
-    name: string;
-    description?: string;
-    min_selection: number;
-    max_selection: number;
-    child_items?: Product[];
-  }[];
 }
 
-export interface Category {
-  name: string;
-  description?: string;
+export interface Modifier extends BaseDescription {
+  min_selection: number;
+  max_selection: number;
+  child_items: ModifierItem[];
+}
+
+export interface Product extends BaseDescription {
+  price: number;
+  child_modifiers?: Modifier[];
+}
+
+export interface Category extends BaseDescription {
   items: Product[];
 }
 
-export enum PageSelectors {
-  CATEGORY_CONTAINER = 'store-content',
-  CATEGORY_NAME = 'list-title',
-  CATEGORY_DESCRIPTION = 'list-description',
-  PRODUCT_CONTAINER = 'product-row-content',
-  PRODUCT_NAME = 'product-row-name__highlighter',
-  PRODUCT_DESCRIPTION = 'product-row-description__highlighter',
-  PRODUCT_PRICE = 'product-price-effective',
-  MODAL_WINDOW = 'modal-window',
-  MODAL_OVERLAY = 'modal-overlay',
-  ADDRESS_MODAL_FORM = 'address-input-modal-container',
-  MODIFIERS_LIST = 'custom-product-form',
+export interface NuxtStateModifierItem extends BaseDescription {
+  priceImpact: number;
 }
 
-export type ElementHandle = PlaywriteElementHandle<HTMLElement>;
+export interface NuxtStateModifier {
+  name: string;
+  min: number;
+  max: number;
+  attributes: NuxtStateModifierItem[];
+}
+
+export interface NuxtStateProduct {
+  data: {
+    name: string;
+    description?: string;
+    price: number;
+    attributeGroups: NuxtStateModifier[];
+  };
+}
+
+export interface NuxtStateCategory {
+  data: {
+    title: string;
+    slug: string;
+    elements: NuxtStateProduct[];
+  }
+}
